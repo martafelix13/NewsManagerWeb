@@ -1,0 +1,20 @@
+<div class="btn-group mt-3 d-flex w-100 flex-wrap">
+  <button
+    *ngFor="let category of categories"
+    [ngClass]="{ active: selectedCategory === category }"
+    class="btn btn-outline-primary"
+    (click)="onCategoryClick(category)"
+  >
+    {{ category }}
+  </button>
+</div>
+
+<!-- Search Bar -->
+<div class="w-auto mb-3 mt-3">
+  <input
+    type="text"
+    placeholder="Search articles..."
+    class="form-control"
+    [formControl]="searchQuery"
+  />
+</div>

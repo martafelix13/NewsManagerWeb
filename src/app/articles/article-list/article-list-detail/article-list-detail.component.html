@@ -1,0 +1,29 @@
+<a class="text-decoration-inherit color-inherit" routerLink="{{ article.id }}">
+  <article class="border rounded p-2 d-flex flex-column">
+    @if(isLoggedIn()) {
+      <div class="d-flex flex-row justify-content-between">
+        <a
+      role="button"
+      class="btn btn-secondary"
+      routerLink="{{ 'edit/' + article.id }}"
+      >Edit</a
+    >
+    <button class="btn btn-danger" (click)="removeArticle($event)">
+      Remove
+    </button>
+  </div>
+
+    }
+    <b>{{ article.title }}</b>
+    <p class="pb-0 mb-0">{{ article.subtitle }}</p>
+    <i>{{ article.update_date }}</i>
+    <hr />
+    <img
+      src="data:{{ article.thumbnail_media_type }};base64, {{
+        article.thumbnail_image
+      }}"
+      alt="{{ article.title }}"
+    />
+    <p class="pt-1" [innerHTML]="article.abstract"></p>
+  </article>
+</a>

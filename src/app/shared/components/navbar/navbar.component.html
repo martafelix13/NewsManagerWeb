@@ -1,0 +1,57 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="d-flex align-content-between w-100 flex-wrap align-items-center ps-4 pe-4">
+    <a class="navbar-brand" aria-current="page" routerLink="/"
+      >News Manager Project</a
+    >
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" routerLink="/articles">
+          Articles
+        </a>
+      </li>
+    </ul>
+    <div class="navbar-expand">
+      @if(isLoggedIn()) {
+      <div>
+        <span class="pe-2">Hello {{ getUser()?.username }}</span>
+        <button class="btn btn-secondary h-75" (click)="logout()">Log Out</button>
+      </div>
+      } @else {
+      <form
+        class="d-flex align-items-end pb-1"
+        role="login"
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+        action
+        method="post"
+      >
+        <div class="pe-3">
+          <label for="username">Username</label>
+          <input
+            class="form-control me-2{{loginForm.errors?.['wrongCredentials'] ? ' is-invalid' : ''}}"
+            type="text"
+            aria-label="Username"
+            id="username"
+            formControlName="username"
+            autocomplete="username"
+            required
+          />
+        </div>
+        <div class="pe-3">
+          <label for="current-password">Password</label>
+          <input
+            class="form-control me-2{{loginForm.errors?.['wrongCredentials'] ? ' is-invalid' : ''}}"
+            type="password"
+            id="current-password"
+            autocomplete="current-password"
+            aria-label="Password"
+            formControlName="password"
+            required
+          />
+        </div>
+        <button class="btn btn-outline-success h-75" type="submit">Login</button>
+      </form>
+      }
+    </div>
+  </div>
+</nav>

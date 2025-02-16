@@ -1,0 +1,94 @@
+<span class="pe-2">
+  <a
+    role="button"
+    class="btn btn-secondary"
+    appBackButton
+    [hideOnInitialLoad]="true"
+    >Back</a
+  >
+</span>
+<button class="btn btn-primary" (click)="onSubmit()">Save</button>
+
+@if(articleId) {
+<h2>Edit article</h2>
+} @else {
+<h2>Create an article</h2>
+}
+
+<form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
+  <label for="title">Title</label>
+  <input type="text" class="form-control" id="title" formControlName="title" />
+  <div *ngIf="f.title.invalid && f.title.touched" class="text-danger">
+    Title is required.
+  </div>
+  <label for="subtitle">Subtitle</label>
+  <input
+    type="text"
+    class="form-control"
+    id="subtitle"
+    formControlName="subtitle"
+  />
+  <div *ngIf="f.subtitle.invalid && f.subtitle.touched" class="text-danger">
+    Subtitle is required.
+  </div>
+
+  <label for="inputGroupFile">Image</label>
+  <input
+    type="file"
+    #filePicker
+    (change)="fileChangeEvent($event)"
+    accept="image/png, image/jpeg"
+    class="form-control"
+    id="inputGroupFile"
+    formControlName="image"
+  />
+
+  @if (f.image.errors?.['imageError']) {
+  <div class="text-danger">
+    There were errors with the image: {{ f.image.getError("imageError") }}
+  </div>
+  }
+  <div *ngIf="article.image_data && article.image_media_type" class="text-center">
+    <img
+      [src]="getImageUrl(article.image_data, article.image_media_type)"
+      alt="Image preview"
+      style="max-width: 80%; height: auto"
+      class="pt-3 pb-2"
+    />
+  </div>
+  <div *ngIf="f.image.invalid && f.image.touched" class="text-danger">
+    Image is required.
+  </div>
+  <label for="abstract">Abstract</label>
+  <input
+    type="text"
+    class="form-control"
+    id="abstract"
+    formControlName="abstract"
+  />
+  <div *ngIf="f.abstract.invalid && f.abstract.touched" class="text-danger">
+    Abstract is required.
+  </div>
+  <label for="category">Category</label>
+  <select class="form-control" id="category" formControlName="category">
+    <option *ngFor="let category of categories" [value]="category">
+      {{ category }}
+    </option>
+  </select>
+  <div *ngIf="f.category.invalid && f.category.touched" class="text-danger">
+    Category is required.
+  </div>
+  <label for="body">Body</label>
+  <div>
+    <quill-editor
+      id="body"
+      formControlName="body"
+      class="w-100"
+      [styles]="{ height: '50px' }"
+      [modules]="quillModules"
+    ></quill-editor>
+  </div>
+</form>
+
+<h3 class="pt-3">Article Preview:</h3>
+<app-article-preview [article]="article"></app-article-preview>

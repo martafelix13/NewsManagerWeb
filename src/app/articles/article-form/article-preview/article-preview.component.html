@@ -1,0 +1,18 @@
+<article class="pt-2">
+  <h2>{{ article.title }}</h2>
+  <h3 class="text-secondary fs-5 fw-light">{{ article.subtitle }}</h3>
+  <span>{{ article.category }}</span>
+  -
+  <span>{{ article.update_date }}</span>
+  <hr />
+  <p [innerHTML]="article.abstract"></p>
+  @if(article.image_data.trim() !== '') {
+  <div class="w-100 text-center">
+    <img
+      src="data:{{ article.image_media_type }};base64, {{ article.image_data }}"
+      alt="{{ article.title }}"
+    />
+  </div>
+}
+  <p class="pt-3" [innerHTML]="article.body"></p>
+</article>

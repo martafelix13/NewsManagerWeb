@@ -1,0 +1,33 @@
+<a role="button" class="btn btn-secondary" appBackButton [hideOnInitialLoad]="true">Back</a>
+
+@if(!loading && article) {
+<article class="pt-2">
+  <h2>{{ article.title }}</h2>
+  <h3 class="text-secondary fs-5 fw-light">{{ article.subtitle }}</h3>
+  <span>{{ article.category }}</span> -
+  <span>{{ article.update_date }}</span>
+  <hr />
+  <p [innerHTML]="article.abstract"></p>
+  <div class="w-100 text-center">
+    <img
+      src="data:{{ article.image_media_type }};base64, {{ article.image_data }}"
+      alt="{{ article.title }}"
+    />
+  </div>
+  <p class="pt-3" [innerHTML]="article.body"></p>
+  <i>Edited by: {{article.username ?? ''}} at {{article.update_date}}</i>
+</article>
+}
+
+@else if(!loading && error) {
+  <div class="text-danger">Error {{error.status}}!</div>
+  @if(error.status === 404) {
+    <div>Article "{{articleId}}" not found!</div>
+  }
+}
+
+@else {
+  <div class="d-flex justify-content-center">
+    <app-spinner/>
+  </div>
+}

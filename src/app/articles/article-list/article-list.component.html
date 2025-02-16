@@ -1,0 +1,36 @@
+<app-article-list-filter
+  (searchChange)="onSearchChange($event)"
+  (categoryChange)="onCategoryChange($event)"
+>
+</app-article-list-filter>
+
+@if(!loading && articles) { @if(isLoggedIn()) {
+<div class="row pb-3">
+  <a
+    role="button"
+    href="/articles/create"
+    class="btn btn-primary"
+    [routerLink]="['/articles', 'create']"
+  >
+    Create new article
+  </a>
+</div>
+}
+
+<div class="row row-cols-lg-4 flex-row">
+  @for (article of filteredArticles; track $index) {
+  <div class="col pb-3">
+    <app-article-list-detail
+      (articleRemoved)="onArticleRemoved($event)"
+      [article]="article"
+    />
+  </div>
+  }
+</div>
+} @else if(!loading && error) {
+<div class="text-danger">Error {{ error.status }}!</div>
+} @else {
+<div class="d-flex justify-content-center">
+  <app-spinner />
+</div>
+}
